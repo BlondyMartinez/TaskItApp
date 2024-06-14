@@ -28,14 +28,15 @@ const SignupUser = () => {
             <div className="card p-4" style={{ maxWidth: "400px", width: "100%" }}>
                 <h4 className="text-center">Create an account</h4>
                 <small className="text-center mb-3">Enter an email to sign up for this app</small>
-                {(store.message || store.error) && <Alert message={store.message} error={store.error} ></Alert>}
+                {(store.error) && <Alert error={store.error} ></Alert>}
                 <form onSubmit={sendData}>
                     <div className="mb-3">
                         <label htmlFor="exampleInputUsername" className="form-label">Username</label>
                         <input 
                             value={username} 
                             onChange={(e) => setUsername(e.target.value)} 
-                            type="text" 
+                            type="text"  
+                            maxLength="24"
                             className="form-control" 
                             id="exampleInputUsername" 
                             placeholder="Enter username"

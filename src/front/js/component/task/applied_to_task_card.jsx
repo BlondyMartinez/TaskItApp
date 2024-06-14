@@ -13,7 +13,7 @@ const AppliedToTask = ({ taskInfo }) => {
     }, [])
 
     return (
-        <div className="col-lg-4 col-12 p-2 d-flex flex-column">
+        <div className="col-xl-4 col-12 p-2 d-flex flex-column">
             <div className={`card p-4 d-flex justify-content-between ${applicantInfo?.status == "accepted" ? "border border-success" : applicantInfo?.status == "rejected" ? "border border-danger" : ""} h-100 flex-grow-1`}>
                 <div>
                     <div className="d-flex align-items-center mb-2">
@@ -35,12 +35,14 @@ const AppliedToTask = ({ taskInfo }) => {
                     </div>
                 </div>
                 <div className="d-flex justify-content-between flex-row">
-                    <h2>{taskInfo.title}</h2>
-                    <small className="text-muted"><b>ID: </b>{taskInfo.id}</small>
+                    <h2 className="col-10">{taskInfo.title}</h2>
+                    <div className="col-2">
+                        <small className="float-end text-muted"><b>ID: </b>{taskInfo.id}</small>
+                    </div>
                 </div>
                 <p className="text-muted">{taskInfo.description}</p>
                 <div className="d-flex align-items-end justify-content-between">
-                    <span><b>Status: </b>{applicantInfo.status}</span>
+                    <span><b>Status: </b>{taskInfo.seeker ? "accepted" : applicantInfo.status}</span>
                     <Link to={`/tasks/${taskInfo.id}`}>
                         <button className="btn btn-green smooth">See Details</button>
                     </Link>

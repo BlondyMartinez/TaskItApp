@@ -23,7 +23,7 @@ const CategoryList = () => {
                 }
             });
         }
-    }, [actions]);
+    }, []);
 
     const handleLogout = () => {
         actions.logoutAdmin();
@@ -60,7 +60,9 @@ const CategoryList = () => {
                         placeholder="Add new category"
                         className="form-control"
                     />
-                    <button className="btn btn-success" type="button" onClick={() => actions.addCategory(newCategoryName)}>Add Category</button>
+                    <button className="btn btn-success" type="button" onClick={() => { actions.addCategory(newCategoryName);
+                        setNewCategoryName("");
+                    }}>Add Category</button>
                 </div>
             </form>
             <ul className="list-group">
