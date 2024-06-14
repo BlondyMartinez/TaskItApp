@@ -17,19 +17,19 @@ export const PhoneUser = () => {
 	const [seekerInfo, setSeekerInfo] = useState({});
 	const [requesterInfo, setRequesterInfo] = useState({});
 
-	useEffect(() => {
-		const loadInfo = async () => {
-			const currentUser = await actions.getUserByUsername(params.theusername);
-			setUser(currentUser);
-			
-			if(currentUser.role == "both"|| currentUser.role == "task_seeker") setSeekerInfo(await actions.getSeeker(currentUser.id));
-			if(currentUser.role == "both"|| currentUser.role == "requester") setRequesterInfo(await actions.getRequester(currentUser.id));
+	useEffect(() => { loadInfo(); }, [])
+	
+	useEffect(() => { if(params.theusername != user.username) loadInfo(); }, [params]);
+	
+	const loadInfo = async () => {
+		const currentUser = await actions.getUserByUsername(params.theusername);
+		setUser(currentUser);
+		
+		if(currentUser.role == "both"|| currentUser.role == "task_seeker") setSeekerInfo(await actions.getSeeker(currentUser.id));
+		if(currentUser.role == "both"|| currentUser.role == "requester") setRequesterInfo(await actions.getRequester(currentUser.id));
 
-			fetchReviews(currentUser)
-		}
-
-		loadInfo();
-	}, [])
+		fetchReviews(currentUser)
+	}
 
 	const fetchReviews = async (currentUser) => {
         try {
@@ -76,7 +76,7 @@ export const PhoneUser = () => {
 								</div>
 							</div>)
 						}
-						<p className="fs-3 text-muted">{user.description}</p>
+						<p className="py-3 fs-3 text-muted">{user.description}</p>
 					</div>
 					<div className="d-flex flex-column justify-content-around gap-2">
                         {	requesterInfo && Object.keys(requesterInfo).length > 0 &&

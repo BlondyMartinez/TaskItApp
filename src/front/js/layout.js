@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
@@ -72,14 +72,14 @@ const Layout = () => {
                                     <Route element={<Category />} path="/categories/:thecategory" />
                                     <Route element={<ProtectedRoute element={<TaskFeed />} />} path="/tasks" />
                                     <Route element={<ProtectedRoute element={ smallDevice ? <PhoneTask /> : <Task />} />} path="/tasks/:theid" />
-                                    <Route element={<Applicants />} path="/tasks/:theid/applicants" />
+                                    <Route element={<ProtectedRoute element={<Applicants />} />} path="/tasks/:theid/applicants" />
                                     <Route element={<Seekers />} path="/seekers" />
                                     <Route element={ smallDevice ? <PhoneUser /> : <User /> } path="/users/:theusername" />
                                     <Route element={<LoginUser />} path="/login" />
                                     <Route element={<SignupUser />} path="/signup" />
                                     <Route element={<LoginAdmin />} path="/login-admin" />
                                     <Route element={<About />} path="/about" />
-                                    <Route element={<EditProfile />} path="/edit-profile" />
+                                    <Route element={<ProtectedRoute element={<EditProfile />} />} path="/edit-profile" />
                                     { smallDevice  && <Route element={<ProtectedRoute element={<PhoneChatList />} />} path="/chats" />}
                                     { smallDevice  && <Route element={<ProtectedRoute element={<PhoneChat />} />} path="/chats/:chatid" />}
                                     {(store.user?.role === "requester" || store.user?.role === "both") && 
@@ -95,6 +95,7 @@ const Layout = () => {
                                         </>
                                     }
                                     <Route element={<h1>Not found!</h1>} />
+                                    <Route path="*" element={<Navigate to="/" />} />
                                 </Routes>
                                 <Footer />
                                 { (store.auth && !smallDevice) && <ChatList></ChatList> }
